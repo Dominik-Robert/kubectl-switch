@@ -32,16 +32,13 @@ import (
 // nsCmd represents the ns command
 var nsCmd = &cobra.Command{
 	Use:   "ns",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Switch or list all available namespaces from a valid kubeconfig",
+	Long: `With the ns subcommand you can list all available namespaces when you specify nothing but a ns argument. 
+	If you specify after the ns argument one more parameter you immediately switch to it.
+	More than 1 Parameter is not supported`,
 	Args: func(cmd *cobra.Command, args []string) error {
 		if !listFlag && len(args) > 1 {
-			return errors.New("requires at least one arg")
+			return errors.New("requires one or no parameters")
 		}
 		return nil
 	},

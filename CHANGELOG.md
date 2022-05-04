@@ -5,8 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Pipeline for building the binary
+## [1.0.1] - 2022-05-04
+### Added
+- A right readme and this changelog
+- docs: Added a helper function to all subcommands
 
-## [1.0.0] - 2022-02-05
+## [1.0.0] - 2022-05-02
 ### Added
 - feat: Add root command with global parameters
   - The global parameters for all subcommands are added in the root

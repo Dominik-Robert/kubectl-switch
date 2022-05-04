@@ -28,16 +28,13 @@ import (
 // ctxCmd represents the ctx command
 var ctxCmd = &cobra.Command{
 	Use:   "ctx",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Switch or list all available contexts from a valid kubeconfig",
+	Long: `With the ctx subcommand you can list all available contexts when you specify nothing but a ctx argument. 
+	If you specify after the ctx argument one more parameter you immediately switch to it.
+	More than 1 Parameter is not supported`,
 	Args: func(cmd *cobra.Command, args []string) error {
-		if !listFlag && len(args) != 1 {
-			return errors.New("requires at least one arg")
+		if !listFlag && len(args) > 1 {
+			return errors.New("requires one or no parameters")
 		}
 		return nil
 	},
@@ -55,20 +52,19 @@ to quickly create a Cobra application.`,
 			log.Fatalf("Unmarshal: %v", err)
 		}
 
-		if listFlag {
+		if len(args) != 1 {
 			for _, value := range kubeConfig.Contexts {
 				fmt.Println(value.Name)
 			}
 			return
+		} else {
+			kubeConfig.CurrentContext = args[0]
+			data, err := yaml.Marshal(kubeConfig)
+			if err != nil {
+				log.Fatalf("Cannot write kubeConfig file: %v", err)
+			}
+			ioutil.WriteFile(kubeConfigPath, data, 0)
 		}
-
-		kubeConfig.CurrentContext = args[0]
-		data, err := yaml.Marshal(kubeConfig)
-		if err != nil {
-			log.Fatalf("Cannot write kubeConfig file: %v", err)
-		}
-		ioutil.WriteFile(kubeConfigPath, data, 0)
-
 	},
 }
 

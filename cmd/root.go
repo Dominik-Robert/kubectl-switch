@@ -50,13 +50,14 @@ type KubeConfig struct {
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "kubectl-switch",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "A little tool which helps you to switch faster to a namespace or a context",
+	Long: `The binary provides two simple commands and a help function:
+	
+	the ns command provides a way to switch or list all namespaces, so if you want to list all namespaces you specify no more parameter just the ns argument.
+	When you want to switch you add the namespaces right after the ns command
+	
+	the ctx command provides a way to switch or list all contexts, so if you want to list all contexts you specify no more parameter just the ctx argument.
+	When you want to switch you add the contexts right after the ctx command`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -90,6 +91,5 @@ func init() {
 
 	dir += string(os.PathSeparator) + ".kube" + string(os.PathSeparator) + "config"
 
-	rootCmd.PersistentFlags().BoolVarP(&listFlag, "list", "l", false, "Prints a list of the selected resources")
 	rootCmd.PersistentFlags().StringVarP(&kubeConfigPath, "kubeConfig", "c", dir, "Prints a list of the selected resources")
 }
